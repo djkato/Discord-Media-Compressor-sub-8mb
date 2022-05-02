@@ -3,3 +3,7 @@ node_modules
 *.mp4
 *.webm
 *.exe
+*.zip
+.gitignore
+settings.json
+*test*

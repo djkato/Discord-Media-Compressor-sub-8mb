@@ -1,11 +1,12 @@
 {
   "name": "discord-media-compressor-8mb",
-  "version": "1.0.0",
-  "description": "helps free discord users to send any media and not get bottlenecked by discords 8mb file limit",
+  "version": "1.0.1",
+  "description": "helps free discord users to send any media(image, video, audio) and not get limited by discords 8mb file limit",
   "main": "index.js",
+  "bin": "./index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "pkg -t latest-win-x64 index.js"
+    "build": "pkg -t --compress GZip package.json"
   },
   "keywords": [
     "discord",
@@ -17,6 +18,15 @@
   "license": "ISC",
   "dependencies": {
     "cli-progress": "^3.11.0",
-    "pkg": "^5.6.0"
+    "pkg": "^5.6.0",
+    "require-runtime": "^2.0.0",
+    "terminal-kit": "^2.4.0"
+  },
+  "pkg": {
+    "scripts": "index.js",
+    "targets": [
+      "latest-win-x64"
+    ],
+    "outputPath": ""
   }
 }
