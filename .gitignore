@@ -4,6 +4,8 @@ node_modules
 *.webm
 *.exe
 *.zip
-.gitignore
+*.webp
+*.ogg
 settings.json
-*test*
+/testing ground/
+/bin/index regular terminal.js
