@@ -4,12 +4,12 @@
   "description": "helps free discord users to send any media(image, video, audio) and not get limited by discords 8mb file limit",
   "main": "index.js",
   "bin": {
-    "DMC": "node bin/index.js"
+    "DMC": "bin/index.js"
   },
   "type": "module",
   "scripts": {
     "start": "node bin/index.js",
-    "build": "pkg .",
+    "build": "pkg . --output dist --debug",
     "test": "node fieldTest.cjs"
   },
   "keywords": [
@@ -28,7 +28,7 @@
     "terminal-kit": "^2.4.0"
   },
   "pkg": {
-    "scripts": "index.js",
+    "scripts": "bin/index.js",
     "targets": [
       "latest-win-x64"
     ],

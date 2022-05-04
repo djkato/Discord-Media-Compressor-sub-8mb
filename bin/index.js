@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from 'fs'
 import { Encoder } from "../lib/encoder.js"
 import { UI } from "../lib/ui.js"
@@ -6,8 +7,10 @@ import { SettingsManager } from "../lib/settingsManager.js"
 import path from "path"
 //get settings
 let settings = new SettingsManager()
-await settings.start()
-
+getSettings()
+async function getSettings() {
+    await settings.start()
+}
 let term = termkit.terminal
 const ui = new UI(settings.settings, settings.currentSetting)
 
@@ -26,7 +29,6 @@ if (!inputList[0]) {
 let filePaths = [], fileNames = [], fileTypes = []
 let presetIndexArg = undefined
 //if preset argument go through list from 2 and add argument
-console.log(inputList)
 if (inputList[0] == "-preset") {
     presetIndexArg = inputList[1]
 
