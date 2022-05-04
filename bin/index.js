@@ -7,16 +7,16 @@ import path from "path"
 //get settings
 let settings = new SettingsManager()
 await settings.start()
-let resolve = path.resolve
+
 let term = termkit.terminal
 const ui = new UI(settings.settings, settings.currentSetting)
 
 /**
- * TODO : Adapt audio quality as well to accomodate long videos(Currently 5m is too much)
- *        FIND A WAY TO COMPILE THIS:..
+ * TODO : FIND A WAY TO COMPILE THIS:..
+ *        
  */
 
-const inputList = process.argv//.slice()
+const inputList = process.argv.slice(2)
 //if launched without params
 if (!inputList[0]) {
     ui.startMenu() //stops program here
@@ -32,7 +32,7 @@ if (inputList[0] == "-preset") {
 
     for (let i = 2; i < inputList.length; i++) {
         let file
-        file = resolve(inputList[i])
+        file = path.resolve(inputList[i])
 
         filePaths.push(file)
 
@@ -47,7 +47,7 @@ if (inputList[0] == "-preset") {
 else {
     for (let i = 0; i < inputList.length; i++) {
         let file
-        file = resolve(inputList[i])
+        file = path.resolve(inputList[i])
 
         filePaths.push(file)
 
