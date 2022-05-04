@@ -6,7 +6,6 @@
   "bin": {
     "DMC": "bin/index.js"
   },
-  "type": "module",
   "scripts": {
     "start": "node bin/index.js",
     "build": "pkg . --output dist --debug",

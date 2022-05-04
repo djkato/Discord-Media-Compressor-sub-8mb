@@ -1,18 +1,11 @@
 #!/usr/bin/env node
-import fs from 'fs'
-import { Encoder } from "../lib/encoder.js"
-import { UI } from "../lib/ui.js"
-import termkit from "terminal-kit"
-import { SettingsManager } from "../lib/settingsManager.js"
-import path from "path"
-//get settings
-let settings = new SettingsManager()
-getSettings()
-async function getSettings() {
-    await settings.start()
-}
+const fs = require('fs')
+const path = require("path")
+const termkit = require("terminal-kit")
+const { Encoder } = require("../lib/encoder.js")
+const { UI } = require("../lib/ui.js")
+const { SettingsManager } = require("../lib/settingsManager.js")
 let term = termkit.terminal
-const ui = new UI(settings.settings, settings.currentSetting)
 
 /**
  * TODO : FIND A WAY TO COMPILE THIS:..
@@ -22,7 +15,7 @@ const ui = new UI(settings.settings, settings.currentSetting)
 const inputList = process.argv.slice(2)
 //if launched without params
 if (!inputList[0]) {
-    ui.startMenu() //stops program here
+    main(true)
 }
 
 //Parse file inputs (n Drag n drop or arguments)
@@ -63,7 +56,13 @@ else {
 }
 main()
 
-async function main() {
+async function main(menu = false) {
+    //get settings
+    let settings = new SettingsManager()
+    await settings.start(__dirname)
+    const ui = new UI(settings.settings, settings.currentSetting, settings.settingsFile)
+
+    if (menu) savesettings = await ui.startMenu()
 
     //file checks
     let isListEncodable = true
