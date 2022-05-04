@@ -11,13 +11,12 @@ let resolve = path.resolve
 let term = termkit.terminal
 const ui = new UI(settings.settings, settings.currentSetting)
 
-
 /**
  * TODO : Adapt audio quality as well to accomodate long videos(Currently 5m is too much)
  *        FIND A WAY TO COMPILE THIS:..
  */
 
-const inputList = process.argv.slice(2)
+const inputList = process.argv//.slice()
 //if launched without params
 if (!inputList[0]) {
     ui.startMenu() //stops program here
@@ -27,6 +26,7 @@ if (!inputList[0]) {
 let filePaths = [], fileNames = [], fileTypes = []
 let presetIndexArg = undefined
 //if preset argument go through list from 2 and add argument
+console.log(inputList)
 if (inputList[0] == "-preset") {
     presetIndexArg = inputList[1]
 

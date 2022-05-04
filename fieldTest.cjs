@@ -3,7 +3,7 @@ const FileHound = require('filehound')
 
 let exec = child_process.exec
 
-let command = "npm run start"
+let command = "npm run start -preset 4"
 let testFiles = FileHound.create()
     .path("testing ground")
     .findSync()
