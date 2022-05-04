@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node bin/index.js",
-    "build": "pkg . --output dist/dme",
+    "build": "pkg . --output dist/8mb",
     "test": "node fieldTest.cjs"
   },
   "keywords": [
