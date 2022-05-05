@@ -60,7 +60,7 @@ async function main(menu = false) {
     //get settings
     let settings = new SettingsManager()
     await settings.start(__dirname)
-    const ui = new UI(settings.settings, settings.currentSetting, settings.settingsFile)
+    const ui = new UI(settings.settings, settings.currentSetting, settings.settingsFile, filePaths?.length)
 
     if (menu) savesettings = await ui.startMenu()
 
@@ -94,15 +94,14 @@ async function main(menu = false) {
     }
     //start encoding all
     if (isListEncodable) {
-
         let encoder = []
+        console.log(`Encoding with "${settings.currentSetting.name}" preset...`)
         for (let i = 0; i < filePaths.length; i++) {
             encoder.push(new Encoder(settings.settings, settings.currentSetting, presetIndexArg))
-            console.log(`Encoding with "${settings.currentSetting.name}" preset...`)
 
             if (fileTypes[i] == "jpg" || fileTypes[i] == "JPG" || fileTypes[i] == "png" || fileTypes[i] == "PNG" || fileTypes[i] == "webp") {
                 ui.newBar(await encoder[i].encodePicture(filePaths[i], fileNames[i]))
-                ui.updateBar("time=00:00:01", i, false, true)
+                encoder[i].on("update", (chunk) => { ui.updateBar(chunk, i, false, true) })
                 encoder[i].on("close", () => { ui.encodeFinished(i) })
             }
             else if (fileTypes[i] == "webm" || fileTypes[i] == "mp4" || fileTypes[i] == "mov" || fileTypes[i] == "mkv" || fileTypes[i] == "avi") {
