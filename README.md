@@ -11,10 +11,11 @@ Easy to use: Just drag a file on the executable and off it goes!
 
 How to install(Windows, Linux, MacOS):
 1. get node.js from [here](https://nodejs.org)
-2. clone repo into any folder you like.
-3. run `npm install --save` to get all dependencies
-4. run `npm install -g .`
-5. execute anywhere using the `8mb [optional: -preset {preset Index}] [file1] [file2] . . .` command!
+2. get ffmpeg for your platform [here](https://ffmpeg.org/download.html), put into $PATH
+3. clone repo into any folder you like.
+4. run `npm install --save` to get all dependencies
+5. run `npm install -g .`
+6. execute anywhere using the `8mb [optional: -preset {preset Index}] [file1] [file2] . . .` command!
 *might have bugs
 
 
