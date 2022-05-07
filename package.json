@@ -1,8 +1,12 @@
 {
-  "name": "discord-media-compressor-8mb",
-  "version": "1.0.1",
+  "name": "8mb",
+  "version": "1.0.11",
   "description": "helps free discord users to send any media(image, video, audio) and not get limited by discords 8mb file limit",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-user/repo-url.git"
+  },
   "bin": {
     "8mb": "bin/index.js"
   },
@@ -17,7 +21,7 @@
     "encoder",
     "ffmpeg"
   ],
-  "author": "djkato",
+  "author": "djkatovfx@gmail.com",
   "license": "ISC",
   "dependencies": {
     "cli-progress": "^3.11.0",
