@@ -35,7 +35,7 @@ if (inputList[0] == "-preset") {
         file = file[file.length - 1]
         file = file.split(".")
 
-        fileTypes.push(file[1])
+        fileTypes.push(file[file.length - 1])
         fileNames.push(file[0])
     }
 }
@@ -50,7 +50,7 @@ else {
         file = file[file.length - 1]
         file = file.split(".")
 
-        fileTypes.push(file[1])
+        fileTypes.push(file[file.length - 1])
         fileNames.push(file[0])
     }
 }
