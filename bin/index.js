@@ -5,6 +5,7 @@ const termkit = require("terminal-kit")
 const { Encoder } = require("../lib/encoder.js")
 const { UI } = require("../lib/ui.js")
 const { SettingsManager } = require("../lib/settingsManager.js")
+const { exec } = require('child_process')
 let term = termkit.terminal
 
 /**
@@ -54,12 +55,16 @@ else {
         fileNames.push(file[0])
     }
 }
+
+
 main()
 
 async function main(menu = false) {
+    //check if ffmpeg and ffprobe exist
     //get settings
     let settings = new SettingsManager()
     await settings.start(__dirname)
+    await checkFF()
     const ui = new UI(settings.settings, settings.currentSetting, settings.settingsFile, filePaths?.length)
 
     if (menu) savesettings = await ui.startMenu()
@@ -79,9 +84,10 @@ async function main(menu = false) {
     //check if all files are valid formats
     if (isListEncodable) {
         for (let i = 0; i < filePaths.length; i++) {
-            if (fileTypes[i] == "jpg" || fileTypes[i] == "JPG" || fileTypes[i] == "png" || fileTypes[i] == "PNG" || fileTypes[i] == "webp" ||
-                fileTypes[i] == "webm" || fileTypes[i] == "mp4" || fileTypes[i] == "mov" || fileTypes[i] == "mkv" || fileTypes[i] == "avi" ||
-                fileTypes[i] == "ogg" || fileTypes[i] == "mp3" || fileTypes[i] == "aiff" || fileTypes[i] == "wav" || fileTypes[i] == "flac") {
+            const filetype = fileTypes[i].toLowerCase()
+            if (fileType == "jpg" || fileType == "png" || fileType == "webp" ||
+                fileType == "webm" || fileType == "mp4" || fileType == "mov" || fileType == "mkv" || fileType == "avi" ||
+                fileType == "ogg" || fileType == "mp3" || fileType == "aiff" || fileType == "wav" || fileType == "flac") {
             }
             else {
                 term.italic(`${fileTypes[i]}`).bold.red(` <- Unsupported format\n`)
@@ -97,25 +103,60 @@ async function main(menu = false) {
         let encoder = []
         console.log(`Encoding with "${settings.currentSetting.name}" preset...`)
         for (let i = 0; i < filePaths.length; i++) {
+            const filetype = fileTypes[i].toLowerCase()
             encoder.push(new Encoder(settings.settings, settings.currentSetting, presetIndexArg))
 
-            if (fileTypes[i] == "jpg" || fileTypes[i] == "JPG" || fileTypes[i] == "png" || fileTypes[i] == "PNG" || fileTypes[i] == "webp") {
+            if (fileType == "jpg" || fileType == "png" || fileType == "webp") {
                 ui.newBar(await encoder[i].encodePicture(filePaths[i], fileNames[i]))
                 encoder[i].on("update", (chunk) => { ui.updateBar(chunk, i, false, true) })
                 encoder[i].on("close", () => { ui.encodeFinished(i) })
             }
-            else if (fileTypes[i] == "webm" || fileTypes[i] == "mp4" || fileTypes[i] == "mov" || fileTypes[i] == "mkv" || fileTypes[i] == "avi") {
+            else if (fileType == "webm" || fileType == "mp4" || fileType == "mov" || fileType == "mkv" || fileType == "avi") {
                 ui.newBar(await encoder[i].encodeVideo(filePaths[i], fileNames[i]))
                 encoder[i].on("update", (chunk) => { ui.updateBar(chunk, i) })
                 encoder[i].on("close", () => { ui.encodeFinished(i) })
             }
-            else if (fileTypes[i] == "ogg" || fileTypes[i] == "mp3" || fileTypes[i] == "aiff" || fileTypes[i] == "wav" || fileTypes[i] == "flac") {
+            else if (fileType == "ogg" || fileType == "mp3" || fileType == "aiff" || fileType == "wav" || fileType == "flac") {
                 ui.newBar(await encoder[i].encodeAudio(filePaths[i], fileNames[i]))
                 encoder[i].on("update", (chunk) => { ui.updateBar(chunk, i, false) })
                 encoder[i].on("close", () => { ui.encodeFinished(i) })
             }
         }
     }
+}
 
-
+async function checkFF() {
+    //check if ffmpeg installed and working
+    return new Promise(async (resolve, reject) => {
+        const test = exec(`ffprobe`)
+        test.stderr.on("data", (chunk) => {
+            if (chunk.substring(0, 15) == "ffprobe version") {
+                resolve()
+            }
+            else {
+                term.red("\nError using ffprobe, please make sure ffprobe is installed and working from terminal.\n")
+                term.blue.underline("https://ffmpeg.org/download.html\n")
+                term.grey("press enter to exit...")
+                term.inputField(function () {
+                    process.exit()
+                    reject()
+                })
+            }
+        })
+        const test2 = exec(`ffmpeg`)
+        test2.stderr.on("data", (chunk) => {
+            if (chunk.substring(0, 14) == "ffmpeg version") {
+                resolve()
+            }
+            else {
+                term.red("\nError using ffmpeg, please make sure ffmpeg is installed and working from terminal.\n")
+                term.blue.underline("https://ffmpeg.org/download.html\n")
+                term.grey("press enter to exit...\n")
+                term.inputField(function () {
+                    process.exit()
+                    reject()
+                })
+            }
+        })
+    })
 }
