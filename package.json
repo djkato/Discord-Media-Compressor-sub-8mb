@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node bin/index.js",
-    "build": "pkg . --output dist/8mb",
+    "build": "pkg package.json --output dist/8mb",
     "test": "node fieldTest.cjs"
   },
   "keywords": [
@@ -27,7 +27,8 @@
     "terminal-kit": "^2.4.0"
   },
   "pkg": {
-    "scripts": "bin/index.js",
+    "scripts": "node_modules/terminal-kit/lib/**/*.js",
+    "assets": "node_modules/terminal-kit/lib/**/*.json",
     "targets": [
       "latest-win-x64",
       "latest-macos-x64",
