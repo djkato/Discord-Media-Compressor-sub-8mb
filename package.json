@@ -1,11 +1,11 @@
 {
   "name": "8mb",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "helps free discord users to send any media(image, video, audio) and not get limited by discords 8mb file limit",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-user/repo-url.git"
+    "url": "https://github.com/djkato/Discord-Media-Compressor-sub-8mb.git"
   },
   "bin": {
     "8mb": "bin/index.js"
