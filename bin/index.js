@@ -84,7 +84,7 @@ async function main(menu = false) {
     //check if all files are valid formats
     if (isListEncodable) {
         for (let i = 0; i < filePaths.length; i++) {
-            const filetype = fileTypes[i].toLowerCase()
+            const fileType = fileTypes[i].toLowerCase()
             if (fileType == "jpg" || fileType == "png" || fileType == "webp" ||
                 fileType == "webm" || fileType == "mp4" || fileType == "mov" || fileType == "mkv" || fileType == "avi" ||
                 fileType == "ogg" || fileType == "mp3" || fileType == "aiff" || fileType == "wav" || fileType == "flac") {
@@ -103,7 +103,7 @@ async function main(menu = false) {
         let encoder = []
         console.log(`Encoding with "${settings.currentSetting.name}" preset...`)
         for (let i = 0; i < filePaths.length; i++) {
-            const filetype = fileTypes[i].toLowerCase()
+            const fileType = fileTypes[i].toLowerCase()
             encoder.push(new Encoder(settings.settings, settings.currentSetting, presetIndexArg))
 
             if (fileType == "jpg" || fileType == "png" || fileType == "webp") {
