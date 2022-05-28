@@ -67,10 +67,11 @@ async function main(menu = false) {
     await checkFF()
     const ui = new UI(settings.settings, settings.currentSetting, settings.settingsFile, filePaths?.length)
 
-    if (menu) savesettings = await ui.startMenu()
-
     //file checks
     let isListEncodable = true
+
+    if (menu) { savesettings = await ui.startMenu(); isListEncodable = false }
+
     //check if all files exist
     for (let i = 0; i < filePaths.length; i++) {
         if (!fs.existsSync(filePaths[i])) {

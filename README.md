@@ -28,3 +28,6 @@ How to install(Windows, Linux, MacOS):
 >2. Add ffmpeg to PATH: `[Win BTN] + R`, type `SystemPropertiesAdvanced`, click `Environment Variables`, under "User variables for (user)" find variable Path, click on it and edit, in the now open window click `new`, and paste `C:\Program Files\DMC\`. 
 >3. If the command `ffmpeg` in cmd works, you can now drag and drop files onto the binary and have it work!
 >4. to set performance preset, doubleclick the binary
+
+
+For an amazing read on how to optimize vp9 for file sizes I reccomend this read: https://codeberg.org/deterenkelt/Nadeshiko/wiki/Researches%E2%80%89%E2%80%93%E2%80%89VP9-and-overshooting
