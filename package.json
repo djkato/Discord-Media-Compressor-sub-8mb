@@ -1,6 +1,6 @@
 {
   "name": "8mb",
-  "version": "1.0.121",
+  "version": "1.0.125",
   "description": "helps free discord users to send any media(image, video, audio) and not get limited by discords 8mb file limit",
   "main": "index.js",
   "repository": {
@@ -24,9 +24,9 @@
   "author": "djkatovfx@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "cli-progress": "^3.11.0",
+    "cli-progress": "^3.11.1",
     "filehound": "^1.17.6",
-    "pkg": "^5.6.0",
+    "pkg": "^5.7.0",
     "require-runtime": "^2.0.0",
     "terminal-kit": "^2.4.0"
   },
