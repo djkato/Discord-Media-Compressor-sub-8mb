@@ -22,66 +22,54 @@ if (!inputList[0]) {
 //Parse file inputs (n Drag n drop or arguments)
 let filePaths = [], fileNames = [], fileTypes = []
 let presetIndexArg = undefined
-//if preset argument go through list from 2 and add argument
-if (inputList[0] == "-preset") {
-    presetIndexArg = inputList[1]
 
-    for (let i = 2; i < inputList.length; i++) {
-        let file
-        file = path.resolve(inputList[i])
+for (let i = 0; i < inputList.length; i++) {
+    let file
+    file = path.resolve(inputList[i])
 
-        filePaths.push(file)
+    filePaths.push(file)
 
-        file = file.split("\\")
-        file = file[file.length - 1]
-        file = file.split(".")
+    file = file.split("\\")
+    file = file[file.length - 1]
+    file = file.split(".")
 
-        fileTypes.push(file[file.length - 1])
-        fileNames.push(file[0])
-    }
+    fileTypes.push(file[file.length - 1])
+    fileNames.push(file[0])
 }
-else {
-    for (let i = 0; i < inputList.length; i++) {
-        let file
-        file = path.resolve(inputList[i])
-
-        filePaths.push(file)
-
-        file = file.split("\\")
-        file = file[file.length - 1]
-        file = file.split(".")
-
-        fileTypes.push(file[file.length - 1])
-        fileNames.push(file[0])
-    }
-}
-
 
 main()
 
 async function main(menu = false) {
-    //check if ffmpeg and ffprobe exist
     //get settings
     let settings = new SettingsManager()
     await settings.start(__dirname)
-    await checkFF()
+    //check if ffmpeg and ffprobe exist
+    try {
+        const check = await checkFF()
+    } catch (reject) {
+        process.exit()
+    }
     const ui = new UI(settings.settings, settings.currentSetting, settings.settingsFile, filePaths?.length)
 
     //file checks
     let isListEncodable = true
 
-    if (menu) { savesettings = await ui.startMenu(); isListEncodable = false }
-
-    //check if all files exist
-    for (let i = 0; i < filePaths.length; i++) {
-        if (!fs.existsSync(filePaths[i])) {
-            term.italic(`${filePaths[i]}`).bold.red(" <- Path or File doesn't exist\n")
-            term.grey("press enter to exit...")
-            isListEncodable = false
-            term.inputField(function () { process.exit() })
-        }
+    if (menu) {
+        isListEncodable = false
+        savesettings = await ui.startMenu()
     }
 
+    //check if all files exist
+    if (isListEncodable) {
+        for (let i = 0; i < filePaths.length; i++) {
+            if (!fs.existsSync(filePaths[i])) {
+                term.italic(`${filePaths[i]}`).bold.red(" <- Path or File doesn't exist\n")
+                term.grey("press enter to exit...")
+                isListEncodable = false
+                term.inputField(function () { process.exit() })
+            }
+        }
+    }
     //check if all files are valid formats
     if (isListEncodable) {
         for (let i = 0; i < filePaths.length; i++) {
@@ -97,15 +85,14 @@ async function main(menu = false) {
                 term.inputField(function () { process.exit() })
             }
         }
-
     }
     //start encoding all
     if (isListEncodable) {
         let encoder = []
-        console.log(`Encoding with "${settings.currentSetting.name}" preset...`)
+        console.log(`Encoding to ${settings.settings.size_limit / 8000} Mb...`)
         for (let i = 0; i < filePaths.length; i++) {
             const fileType = fileTypes[i].toLowerCase()
-            encoder.push(new Encoder(settings.settings, settings.currentSetting, presetIndexArg))
+            encoder.push(new Encoder(settings.settings))
 
             if (fileType == "jpg" || fileType == "png" || fileType == "webp") {
                 ui.newBar(await encoder[i].encodePicture(filePaths[i], fileNames[i]))
@@ -139,7 +126,6 @@ async function checkFF() {
                 term.blue.underline("https://ffmpeg.org/download.html\n")
                 term.grey("press enter to exit...")
                 term.inputField(function () {
-                    process.exit()
                     reject()
                 })
             }
@@ -154,7 +140,6 @@ async function checkFF() {
                 term.blue.underline("https://ffmpeg.org/download.html\n")
                 term.grey("press enter to exit...\n")
                 term.inputField(function () {
-                    process.exit()
                     reject()
                 })
             }
