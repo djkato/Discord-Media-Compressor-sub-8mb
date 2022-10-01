@@ -74,7 +74,7 @@ async function main(menu = false) {
     if (isListEncodable) {
         for (let i = 0; i < filePaths.length; i++) {
             const fileType = fileTypes[i].toLowerCase()
-            if (fileType == "jpg" || fileType == "png" || fileType == "webp" ||
+            if (fileType == "jpg" || fileType == "png" || fileType == "webp" || fileType == "exr" ||
                 fileType == "webm" || fileType == "mp4" || fileType == "mov" || fileType == "mkv" || fileType == "avi" ||
                 fileType == "ogg" || fileType == "mp3" || fileType == "aiff" || fileType == "wav" || fileType == "flac") {
             }
@@ -94,7 +94,7 @@ async function main(menu = false) {
             const fileType = fileTypes[i].toLowerCase()
             encoder.push(new Encoder(settings.settings))
 
-            if (fileType == "jpg" || fileType == "png" || fileType == "webp") {
+            if (fileType == "jpg" || fileType == "png" || fileType == "webp" || fileType == "exr") {
                 ui.newBar(await encoder[i].encodePicture(filePaths[i], fileNames[i]))
                 encoder[i].on("update", (chunk) => { ui.updateBar(chunk, i, false, true) })
                 encoder[i].on("close", () => { ui.encodeFinished(i) })
