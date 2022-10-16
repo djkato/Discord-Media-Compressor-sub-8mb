@@ -1,6 +1,6 @@
 {
   "name": "8mb",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "helps free discord users to send any media(image, video, audio) and not get limited by discords 8mb file limit",
   "main": "index.js",
   "repository": {

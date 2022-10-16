@@ -31,10 +31,12 @@ for (let i = 0; i < inputList.length; i++) {
 
     file = file.split("\\")
     file = file[file.length - 1]
-    file = file.split(".")
+    const dot_index = file.lastIndexOf(".")
+    const file_name = file.slice(0, dot_index)
+    const file_type = file.slice(dot_index + 1)
 
-    fileTypes.push(file[file.length - 1])
-    fileNames.push(file[0])
+    fileTypes.push(file_type)
+    fileNames.push(file_name)
 }
 
 main()
