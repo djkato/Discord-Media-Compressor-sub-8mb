@@ -1,4 +1,6 @@
 <a href='https://ko-fi.com/A0A8Q3SVZ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi4.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+# REWROTE IT IN RUST! SEE NEW VERSION [HERE](https://github.com/djkato/n-mb)
+
 # Automatically converts any video into webm, makes sure its 8mb or less!
 For all those who want to post memes that are just too big and surpass the 8mb free upload limit on discord, this is the app for you!
 
